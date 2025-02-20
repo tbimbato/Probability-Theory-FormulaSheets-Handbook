@@ -7,4 +7,4 @@ Contents
 - Formula-Sheet-1.pdf: Counting, set theory, discrete and continuous distributions properties, joint distributions, LLN and CLT
 - Formula-Sheet-2.pdf: Important distributions
 - Formula-Sheet-3.pdf: Markov Chains and Poisson Processes
-- Practical Guide: A handbook offering a quick introduction and practical insights into Probability for Data Science.
+- Practical_guide_to_P4DS.pdf: A handbook offering a quick introduction and practical insights into Probability for Data Science.
