@@ -1,0 +1,287 @@
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usepackage{paralist}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0.5pt, itemsep=2.5pt, parsep=0pt, partopsep=0pt}
+
+
+\title{Probability for Data Science - Formula Sheet 1}
+\author{Tommi Bimbato - LM Data Science / Univr - 2024}
+\date{}
+
+\advance\topmargin-2cm
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.6in
+\advance\evensidemargin-1.6in
+\parindent5pt
+\parskip5pt
+
+\begin{document}
+
+\begin{center}
+{\huge{\textbf{Probability for Data Science - Formula Sheet 0}}}\\
+\vspace{+0.2cm}
+Tommi Bimbato - Matr. VR527601 \textbf{1st Semester Sitting - LM Data Science / Univr - Feb. 2025}\\
+\vspace{+0.6cm}
+
+\end{center}
+
+\begin{multicols*}{3}
+    \setlength{\abovedisplayskip}{1pt}
+    \setlength{\belowdisplayskip}{1pt}
+\tikzstyle{mybox} = [draw=black, fill=white, thin ,
+    rectangle, rounded corners, inner sep=0.3cm, inner ysep=0.6cm]
+\tikzstyle{fancytitle} =[fill=white, text=black, font=\small\bfseries]
+
+
+%------------ Essential Mathematical Formulas for Probability & Statistics ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+            % Properties of Exponentials
+            \textbf{Exponential Properties:}\\
+            $e^0 = 1$, \quad $e^{a+b} = e^a \cdot e^b$\\
+            $e^{a-b} = \frac{e^a}{e^b}$, \quad $(e^a)^b = e^{ab}$\\
+            $e^{-x} = \frac{1}{e^x}$, \quad $e^\infty = \infty$, \quad $e^{-\infty} = 0$\\
+            \vspace{0.4cm}\\
+            % Logarithms
+            \textbf{Logarithm Properties:}\\
+            $\ln(ab) = \ln(a) + \ln(b)$, \quad $\ln\left(\frac{a}{b}\right) = \ln(a) - \ln(b)$\\
+            $\ln(a^b) = b \cdot \ln(a)$, \quad $\ln(1) = 0$, \quad $\ln(e) = 1$\\
+            \vspace{0.4cm}\\
+            % Exponential-Logarithm Relationship
+            \textbf{Key Relationship:}\\
+            $e^{\ln(x)} = x$, \quad $\ln(e^x) = x, \quad x > 0$\\
+            \vspace{0.4cm}\\
+            % Approximations (Taylor Expansions)
+            \textbf{Approximations:}\\
+            $e^x \approx 1 + x + \frac{x^2}{2} + O(x^3)$ \quad (for small \( x \))\\
+            $\ln(1+x) \approx x - \frac{x^2}{2} + O(x^3)$ \quad (for small \( x \))\\
+            \vspace{0.4cm}\\
+            % Basic Integrals
+            \textbf{Useful Integrals:}\\
+            $\int e^x \, dx = e^x + C$\\
+            $\int e^{kx} \, dx = \frac{1}{k} e^{kx} + C$\\
+            $\int \ln(x) \, dx = x \ln(x) - x + C$\\
+            \vspace{0.4cm}\\
+            % Definite Integrals with \(e\)
+            $\int_0^\infty e^{-\lambda x} \, dx = \frac{1}{\lambda}$ \quad (Useful for Poisson, Exp.)\\
+            $\int_0^\infty x e^{-x} \, dx = 1$\\
+            $\int_0^\infty x^2 e^{-x} \, dx = 2$\\
+            \vspace{0.4cm}\\
+            % Differentiation Rules
+            \textbf{Key Derivatives:}\\
+            $\frac{d}{dx} e^x = e^x$ \quad $\frac{d}{dx} e^{kx} = k e^{kx}$\\
+            $\frac{d}{dx} \ln(x) = \frac{1}{x}$\\
+            \vspace{0.4cm}\\
+            % Change of Variables (Useful for PDFs\\
+            \textbf{Variable Transformations:}\\\
+            If $Y = g(X)$, then $f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right|$\\
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Math handbook};
+\end{tikzpicture}
+
+
+
+
+
+
+
+%------------ Integration Formulas ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.26\textwidth}
+            \small
+            % Constant
+            $\int c \, dx = c x + C$\\
+            \vspace{0.17cm}
+            % Power Rule
+            $\int x^n \, dx = \frac{x^{n+1}}{n+1} + C, \quad n \neq -1$\\
+            $\int_{a}^{b} k \cdot f(x) \, dx = k \cdot \int_{a}^{b} f(x) \, dx$\\
+            \vspace{0.17cm}
+            % Trigonometric Functions
+            $\int \sin(x) \, dx = -\cos(x) + C$\\
+            $\int \cos(x) \, dx = \sin(x) + C$\\
+            \vspace{0.17cm}
+            % Logarithm
+            $\int \ln(x) \, dx = x \ln(x) - x + C$\\
+            \vspace{0.17cm}
+            % Exponential
+            $\int e^x \, dx = e^x + C$\\
+            $\int e^{kx} \, dx = \frac{1}{k} e^{kx}$, \quad $e^0 = 1$, $e^{-\infty} = 0$\\
+            $\int e^{g(x)} \, dx = \frac{1}{g{\prime}(x)} e^{g(x)}$\\
+            \vspace{0.4cm}
+            % Sum and Subtraction
+            $\int (f(x) + g(x)) \, dx = \int f(x) \, dx + \int g(x) \, dx$\\
+            \vspace{0.17cm}
+            % Product Rule (Integration by Parts)
+            $\int u(x) v'(x) \, dx = u(x) v(x) - \int v(x) u'(x) \, dx$\\
+            $\int_{-\infty}^\infty e^{-x^2} dx = \sqrt{\pi}$\\
+            \\
+            $\int a \cdot (b + c) = \int( a \cdot b) + \int (a \cdot c)$\\
+        
+            $\int_0^{+\infty} x \cdot e^{-kx} \, dx = \frac{1}{k^2}, \quad k > 0$
+
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Integration Formulas};
+\end{tikzpicture}
+
+
+%------------ Differentiation Formulas ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.26\textwidth}
+            \scriptsize
+            % Constant
+            $\frac{d}{dx} [c] = 0$\\
+            \vspace{0.2cm}
+            % Power Rule
+            $\frac{d}{dx} [x^n] = n \cdot x^{n-1}, \quad n \in \mathbb{R}$\\
+            \vspace{0.4cm}
+            % Trigonometric Functions
+            $\frac{d}{dx} [\sin(x)] = \cos(x)$\\
+            $\frac{d}{dx} [\cos(x)] = -\sin(x)$\\
+            $\frac{d}{dx} [\tan(x)] = \sec^2(x), \quad x \neq \frac{\pi}{2} + n\pi$\\
+            \vspace{0.2cm}
+            % Logarithm
+            $\frac{d}{dx} [\ln(x)] = \frac{1}{x}, \quad x > 0$\\
+            $\frac{d}{dx} [\log_a(x)] = \frac{1}{x \ln(a)}$\\
+            \vspace{0.2cm}
+            % Exponential
+            $\frac{d}{dx} [e^x] = e^x$\\
+            $\frac{d}{dx} [e^{g(x)}] = g'(x) \cdot e^{g(x)}$\\
+            \vspace{0.2cm}
+            % Sum and Subtraction
+            $\frac{d}{dx} [f(x) + g(x)] = f'(x) + g'(x)$\\
+            $\frac{d}{dx} [f(x) - g(x)] = f'(x) - g'(x)$\\
+            \vspace{0.2cm}
+            % Product Rule
+            $\frac{d}{dx} [f(x) \cdot g(x)] = f'(x) g(x) + f(x) g'(x)$\\
+            \vspace{0.2cm}
+            % Quotient Rule
+            $\frac{d}{dx} \left[\frac{f(x)}{g(x)}\right] = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2}, \quad g(x) \neq 0$\\
+            \vspace{0.2cm}
+            % Chain Rule
+            $\frac{d}{dx} [f(g(x))] = f'(g(x)) \cdot g'(x)$
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Differentiation Formulas};
+\end{tikzpicture}
+
+
+%------------ Change of Variables in PDFs (Continuous Case) ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+            $f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right|$
+            \vspace{0.2cm}
+            \scriptsize
+            \begin{itemize}
+                \item \textbf{Linear transformation:} \( Y = X - n \) $\quad f_Y(y) = f_X(y + n)$
+                \[
+                X = Y + n, \quad \frac{d}{dy} g^{-1}(y) = 1
+                \]
+\vspace{0.1cm}
+                \item \textbf{Scaling:} \( Y = nX \), with \( n > 0 \quad f_Y(y) = \frac{1}{n} f_X\left(\frac{y}{n}\right) \)
+                \[
+                X = \frac{Y}{n}, \quad \frac{d}{dy} g^{-1}(y) = \frac{1}{n}
+                \]
+\vspace{0.1cm}
+                \item \textbf{Logarithm:} \( Y = \log(X) \quad f_Y(y) = e^y f_X(e^y)\)
+                \[
+                X = e^Y, \quad \frac{d}{dy} g^{-1}(y) = e^Y
+                \]
+\vspace{0.1cm}
+                \item \textbf{Absolute value:} \( Y = |X| \)
+                \[
+                f_Y(y) =
+                \begin{cases}
+                    f_X(y) + f_X(-y), & y \geq 0 \\
+                    0, & y < 0
+                \end{cases}
+                \]
+\vspace{0.1cm}
+                \item \textbf{Reciprocal (inversion):} \( Y = \frac{1}{X} \quad f_Y(y) = \frac{1}{|y^2|} f_X\left(\frac{1}{y}\right)\)
+                \[
+                X = \frac{1}{Y}, \quad \frac{d}{dy} g^{-1}(y) = -\frac{1}{y^2}
+                \]
+\vspace{0.1cm}
+                \item \textbf{Square root:} \( Y = X^2 \), for \( X \geq 0 \quad  f_Y(y) = \frac{1}{2\sqrt{y}} f_X(\sqrt{y}) \)
+                \[
+                X = \sqrt{Y}, \quad \frac{d}{dy} g^{-1}(y) = \frac{1}{2\sqrt{y}}
+                \]
+
+                \vspace{0.1cm}
+                \item \textbf{Power function:} \( Y = X^k \), with \( k > 0 \)
+                \[
+                X = Y^{1/k}, \quad \frac{d}{dy} g^{-1}(y) = \frac{1}{k} y^{\frac{1}{k} - 1}
+                \]
+                \[
+                f_Y(y) = \frac{1}{k} y^{\frac{1}{k} - 1} f_X(y^{1/k})
+                \]
+            \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Change of Variables in PDFs (Continuous Case)};
+\end{tikzpicture}
+
+
+
+%------------ Change of Variables in PMFs (Discrete Case) ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth} \tiny
+            If \( Y = g(X) \) is a discrete transformation, then:
+            \[
+            P(Y = y) = P(X = g^{-1}(y))
+            \]
+            \vspace{0.2cm}
+            \begin{itemize}
+                \item \textbf{Linear transformation:} \( Y = X - n \to P(Y = y) = P(X = y + n)\)
+
+                \item \textbf{Scaling:} $ Y = nX $ with integer $n$ $\to P(Y = y) = P\left(X = \frac{y}{n}\right)$
+                only if \( y/n \) is an integer
+
+                \item \textbf{Absolute value:} \( Y = |X| \)
+                \[
+                P(Y = y) =
+                \begin{cases}
+                    P(X = y) + P(X = -y), & y \geq 0 \\
+                    0, & y < 0
+                \end{cases}
+                \]
+
+                \item \textbf{Reciprocal (special case for integers):} \( Y = \frac{1}{X} \)
+                \[
+                P(Y = y) = P\left(X = \frac{1}{y}\right) \quad \text{(only if \( 1/y \) is an integer)}
+                \]
+
+                \item \textbf{Square transformation (for non-negative integers):} \( Y = X^2 \)
+                \[
+                P(Y = y) =
+                \begin{cases}
+                    P(X = \sqrt{y}) + P(X = -\sqrt{y}), & y \text{ is a perfect square} \\
+                    0, & \text{otherwise}
+                \end{cases}
+                \]
+
+            \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Change of Variables in PMFs (Discrete Case)};
+\end{tikzpicture}
+
+
+\end{multicols*}
+\end{document}

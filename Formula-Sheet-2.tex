@@ -1,0 +1,259 @@
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usepackage{paralist}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0.4pt, itemsep=3pt, parsep=0pt, partopsep=0pt}
+
+
+\title{Probability for Data Science - Formula Sheet 2}
+\author{Tommi Bimbato - LM Data Science / Univr - 2024}
+\date{}
+
+\advance\topmargin-2cm
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.6in
+\advance\evensidemargin-1.6in
+\parindent5pt
+\parskip5pt
+
+\begin{document}
+
+\begin{center}
+{\huge{\textbf{Probability for Data Science - Formula Sheet 2}}}\\
+\vspace{+0.2cm}
+Tommi Bimbato - Matr. VR527601 \textbf{1st Semester Sitting - LM Data Science / Univr - Feb. 2025}\\
+\vspace{+0.6cm}
+
+\end{center}
+
+\begin{multicols*}{3}
+    \setlength{\abovedisplayskip}{1pt}
+    \setlength{\belowdisplayskip}{1pt}
+\tikzstyle{mybox} = [draw=black, fill=white, thin ,
+    rectangle, rounded corners, inner sep=0.3cm, inner ysep=0.6cm]
+\tikzstyle{fancytitle} =[fill=white, text=black, font=\small\bfseries]
+
+\small
+
+%------------ Uniform Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+            $X \sim Unif(a, b)$ \begin{itemize}\small
+            \item \textbf{Discrete:} $P(X = x) = \frac{1}{b-a+1}, \quad x \in \{a, \dots, b\}$
+            \item \textbf{Continuous:} $f_X(x) = \frac{1}{b-a}, \quad a \leq x \leq b$\\
+                    \tiny $otherwise \quad f_X(x) = 0$
+                    \small
+            \item \textbf{CDF : $ F_X(x) = P(X \leq x)$:}  
+            \begin{itemize}
+                \vspace{0.2cm}
+                \item Discrete: $\frac{\lfloor x \rfloor - a + 1}{b - a + 1}, \quad a \leq x \leq b$
+                \item Continuous: $\frac{x - a}{b - a}, \quad a \leq x \leq b$
+            \end{itemize}
+            \item $\mathbb{E}[X] = \frac{a+b}{2}, \quad \operatorname{Var}(X) = \frac{(b - a)^2}{12}$
+            \item \tiny{\textbf{Linear Transf:} $X \sim \text{Unif}(a,b) \rightarrow zX+j \sim \text{Unif}((az+j), (bz+j))$}
+            \item \tiny{\textbf{Sum:} $X_1, X_2 \sim \text{Unif}(a, b) \Rightarrow X_1 + X_2 \sim \text{Tri}(2a, 2b, a+b)$}
+        \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Uniform Distribution};
+\end{tikzpicture}
+
+
+
+%------------ Binomial Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+        $X \sim Bin(n, p)$ \begin{itemize}
+            \item \tiny {\textbf{Bernoulli}:Special case in binomial where $n = 1$}\scriptsize	
+            \begin{itemize}
+                \item $P(X = x) =\quad  p$  if  $x = 1$, $\quad (1-p)$  if  $x = 0$ 
+                \item $\mathbb{E}[X] = p, \quad \text{Var}[X] = p(1-p)$
+                \item \tiny{Sum of $n$ i.i.d. Bernoulli: Binomial$(n, p)$}
+            \end{itemize} \small
+            \item PMF: $P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$
+            \item $\mathbb{E}[X] = n \cdot p, \; \  \text{Var}[X] = n \cdot p \cdot (1-p)$
+            \item Bin$(n, p) \approx N(n p, n p (1-p))$ for large $n$
+        \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Binomial Distribution \tiny{(Number of successes in $n$ trials)}};
+\end{tikzpicture}
+
+%------------ Exponential Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+        $X \sim Exp(\lambda)$ \begin{itemize} 
+            \item \textbf{PDF:} \quad $f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$
+            \item \textbf{CDF:} \quad $P(X \leq x) = 1 - e^{-\lambda x}$
+            \item \textbf{Survival func:} \quad $P(X > x) = e^{-\lambda x}$
+            \item \textbf{Moments:}\\ $\mathbb{E}[X] = \frac{1}{\lambda}, \quad \text{Var}[X] = \frac{1}{\lambda^2}, \quad \mathbb{E}[X^2] = \frac{2}{\lambda^2}$
+            \item \footnotesize{\textbf{Memoryless prop.}:}  $P(X > t+s \mid X > s) = P(X > t)$\\
+            \item \textbf{If} $X \sim Exp(\lambda)$ \textbf{and} $Y \sim Exp(\mu)$:
+            \begin{itemize}
+                \item $\min(X,Y) \sim Exp(\lambda + \mu)$
+                \item $P(X < Y) = \frac{\lambda}{\lambda + \mu}, \quad P(X > Y) = \frac{\mu}{\lambda + \mu}$
+                \item $J = X + Y \sim Gamma(2, \lambda + \mu)$
+                \item \tiny{If summing $n$ i.i.d. Exp($\lambda$) RVs, then $J \sim Gamma(n, \lambda)$ (same rate $\lambda$)}
+            \end{itemize}
+            \item \textbf{Scaling property:} \quad $aX \sim Exp\left(\frac{\lambda}{a}\right)$ for $a > 0$
+        \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Exponential Distribution \tiny{(Time Until First Event)}};
+\end{tikzpicture}
+
+
+\newcolumn
+
+
+%------------ Poisson Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+            $X \sim Pois(\lambda)$ \begin{itemize}
+                \item \textbf{PMF:} \quad $P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad $ \tiny{$k = 0,1,2,\dots$}\small
+
+                \item$\mathbb{E}[X] = \lambda, \quad \text{Var}[X] = \lambda$
+                \item \textbf{If} $X \sim Pois(\lambda)$ \textbf{and} $Y \sim Pois(\mu)$:
+                \begin{itemize}
+                    \item $X + Y \sim Pois(\lambda + \mu)$
+                    \item \tiny{Interval between events is $Exp(\lambda)$}
+                    \item $P(X+Y > k)$ \tiny{If $\lambda, \mu > 10$, use normal approximation:}\\
+                    \tiny{$\mathcal{N}(\lambda + \mu, \lambda + \mu)$, where mean = $\lambda + \mu$, variance = $\lambda + \mu$}
+                \end{itemize}
+            \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Poisson Distribution \tiny{(How many events in a time frame?)}};
+\end{tikzpicture}
+
+
+%------------ Gamma RV ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+            $X \sim \Gamma(\alpha, \lambda)$
+            \begin{itemize}
+            \item \textbf{PDF:} \quad $f(x) = \frac{\lambda^\alpha x^{\alpha-1} e^{-\lambda x}}{\Gamma(\alpha)}, \quad x > 0$
+            \item \textbf{Mean and Variance:}  \\
+                $\mathbb{E}[X] = \frac{\alpha}{\lambda}, \quad \text{Var}[X] = \frac{\alpha}{\lambda^2}$\\
+            \item \textbf{Special case:}  
+                If $X \sim \Gamma(1, \lambda)$, then $X \sim \text{Exp}(\lambda)$\\
+                \tiny{$X \sim \Gamma(\alpha = n of event \quad , \lambda = rate)$}
+        \end{itemize}
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Gamma RV \tiny{(Time until $n$ events in a Poisson Process)}};
+\end{tikzpicture}
+
+
+%------------ Geometric Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+        \tiny{Indipendent bernoulli trials}\\
+        \small $X \sim Geom(p)$ 
+        \begin{itemize}
+            \item PMF: $P(X = k) = (1-p)^{k-1}p, \quad k = 1, 2, \dots$
+            \item $\mathbb{E}[X] = \frac{1}{p}, \; \text{Var}[X] = \frac{1-p}{p^2}$
+            \item $P(X > k) = (1-p)^k$
+            \item $P(X \leq k) = 1 - (1-p)^k$
+            \item \scriptsize{Memoryless prop}: $P(X > k + n \mid X > k) = P(X > n)$
+        \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Geometric RV \tiny{(Trials until first success)}};
+\end{tikzpicture}
+
+
+\newcolumn
+
+%------------ Normal Distribution ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+        \begin{itemize}
+            \item \textbf{PDF:}  
+            \[
+            f(x) = \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+            \]
+            \item \textbf{Mean and Variance:}  
+            \[
+            \mathbb{E}[X] = \mu, \quad \text{Var}[X] = \sigma^2
+            \]
+            \item \textbf{Standardization:} \quad $Z = \frac{X - \mu}{\sigma}$
+            \item \textbf{Probability Computation:} \tiny with $\Phi(z) = P(Z \leq z)$ \scriptsize
+            \vspace{-0.2cm}
+            \[
+            P(X \leq a) = \Phi\left(\frac{a-\mu}{\sigma}\right)
+            \]
+            \vspace{-0.3cm}
+            \[
+            P(X > a) = 1 - \Phi\left(\frac{a-\mu}{\sigma}\right)
+            \]
+            \tiny
+            \[
+            \star \quad P(a \leq X \leq b) = \Phi\left(\frac{b-\mu}{\sigma}\right) - \Phi\left(\frac{a-\mu}{\sigma}\right)
+            \]
+            \tiny
+            \begin{multicols}{2}
+                
+                \item \textbf{Linear t.:}  \\
+                $aX + b \sim N((a\mu + b), (a^2\sigma^2))$
+                \newcolumn
+                \item \textbf{Simmetry:}\\
+                $P(|X| > a) = 2P(X > a)$
+                \end{multicols}
+                \vspace{-0.4cm}
+            \scriptsize
+            \item \textbf{Continuity C. Discrete $\to$ normal Approximations:}  
+            \begin{itemize}
+                \item $P(X \leq k) \approx P(X < k + 0.5) = \Phi\left(\frac{k + 0.5 - \mu}{\sigma}\right)$
+                \item $P(X \geq k) \approx P(X > k - 0.5) = 1 - \Phi\left(\frac{k - 0.5 - \mu}{\sigma}\right)$
+                \item $P(a \leq X \leq b) \approx P((a - 0.5) \leq X \leq (b + 0.5)) = \star$
+            \end{itemize}
+        \item Sum of 2 Normally distributed RVs: \\$X \sim N(\mu_1, \sigma_1^2)$, $Y \sim N(\mu_2, \sigma_2^2)$:\\
+        $X \pm Y \sim N(\mu_1 \pm \mu_2, \sigma_1^2 \pm \sigma_2^2)$\\ \tiny{sum of VARIANCE not sum of ST Dev.} \\\small
+
+    \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Normal Distribution};
+\end{tikzpicture}
+
+
+
+%------------ Sums and Transformations of Random Variables ---------------
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.3\textwidth}
+        \begin{itemize} 
+            \item If $X$ and $Y$ are independent, the PDF of $J = X + Y$ is:
+            $f_J(j) = \int_{-\infty}^\infty f_X(x) f_Y(j - x) dx$
+
+        \end{itemize}
+        \end{minipage}
+    };
+\node[fancytitle, right=10pt] at (box.north west) {Sums and Transformations of RVs};
+\end{tikzpicture}
+
+
+\end{multicols*}
+\end{document}
+
+
+
+
+

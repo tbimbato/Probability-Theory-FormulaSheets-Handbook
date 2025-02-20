@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usepackage{paralist}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0.4pt, itemsep=4pt, parsep=0pt, partopsep=0pt}
+
+
+\title{Probability for Data Science - Formula Sheet 3}
+\author{Tommi Bimbato - LM Data Science / Univr - 2024}
+\date{}
+
+\advance\topmargin-2cm
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.6in
+\advance\evensidemargin-1.6in
+\parindent5pt
+\parskip5pt
+
+\begin{document}
+
+\begin{center}
+{\huge{\textbf{Probability for Data Science - Formula Sheet 3}}}\\
+\vspace{+0.2cm}
+Tommi Bimbato - Matr. VR527601 \textbf{1st Semester Sitting - LM Data Science / Univr - Feb. 2025}\\
+\vspace{+0.6cm}
+
+\end{center}
+
+\begin{multicols*}{2}
+    \setlength{\abovedisplayskip}{1pt}
+    \setlength{\belowdisplayskip}{1pt}
+\tikzstyle{mybox} = [draw=black, fill=white, thin ,
+    rectangle, rounded corners, inner sep=0.3cm, inner ysep=0.6cm]
+\tikzstyle{fancytitle} =[fill=white, text=black, font=\small\bfseries]
+
+%------------ Discrete Markov Chains ---------------
+
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.45\textwidth}
+    \begin{itemize}
+        % Proprietà Fondamentali
+        \item \begin{itemize}\tiny
+        \item  Markov prop. :$P(X_{n+1} | X_n, X_{n-1}, \dots, X_0) = P(X_{n+1} | X_n)$  
+            \item $P(X_{n+1} = x_{n+1} \mid X_n = x_n, X_{n-1}, \dots, X_0) =$\\
+                $ P(X_{n+1} = x_{n+1} \mid X_n = x_n)$ (1-step memory)\\
+            \item $P(X_0 = x_0, X_1 = x_1, \dots, X_n = x_n) =$\\
+                $P(X_n \mid X_{n-1}) P(X_{n-1} \mid X_{n-2}) \cdots P(X_1 \mid X_0) P(X_0)$ (follow the path)\\
+        \end{itemize}
+
+        \small
+            \item \textbf{n-step P}: $\mathbb{P}^n$\\   \tiny $\sum row = 1$, always \small
+            \item \textbf{Classification of States:}\tiny
+                \subitem $\star$ \textbf{Irreducible}: (MC composed by one class)
+                \subitem $\star$ \textbf{Aperiodic}: $\gcd(\text{cycle lengths}) = 1 within class$
+                \subitem {Recurrent}: Visited infinitely often (when i enter a recurrent class I never leave)
+                \subitem {Transient}: Visited finitely often (when i enter a transient class I can leave it)
+                \subitem $\star$ \textbf{Positive Recurrent / ergodic}: finte mean return time or finite number of states
+                \small
+            \item \textbf{First Step Analysis}: \tiny $P_i =$ \\Prob. of reaching a state from $i$, solving $P_i = \sum_j P_{ij} P_j$ with boundary conditions ($P_{goal} = 1, P_{abs.} = 0)$.
+            \item \textbf{Stationary dist / prop. of time}: $\lim\limits_{n \to +\infty} P^n_{ij} = \pi_j$ \tiny$\text{for all } i, j \in S$\small
+            \[
+            \begin{cases} 
+                \pi = \pi  \cdot P \\
+                \sum_{i \in \mathbb{S}} \pi_i = 1
+            \end{cases}
+            \]
+
+            \end{itemize}
+
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Discrete Markov Chains};
+\end{tikzpicture}
+
+
+%------------ Poisson Process ---------------
+
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.45\textwidth}
+
+    \begin{itemize}\tiny
+        \item $(N(t))_{t\geq 0}$ is a Poisson Process with rate $\lambda$ if:
+        \begin{itemize}\small
+            \item no. of arrivals: $N(t) \sim Pois(\lambda t)$ $\quad $ Inter-arrival times: $T_i \sim Exp(\lambda)$
+        \end{itemize}
+        \item \textbf{Properties:}
+        \begin{itemize} \scriptsize
+            \item $P(N(t+s) - N(s) = k) = P(N(t) = k)$ $\quad$ $P(T > t + s | T > s) = P(T > t)$
+            \item $N(t) - N(s) \sim \text{Pois}(\lambda (t-s))$
+            \item \tiny The no. of arrivals in \textbf{disjoint} intervals are independent. 
+            \scriptsize
+            \item if $N_1(t) \sim \text{Pois}(\lambda_1 t)$ and  $N_2(t) \sim \text{Pois}(\lambda_2 t) \quad \rightarrow \quad N_1(t) + N_2(t) \sim \text{Pois}((\lambda_1 + \lambda_2)t)$
+                   
+            \item Filtered PP: e.g., 'special' calls occur with $P= p$ $\rightarrow$ $\lambda_{\text{special}} = (p \cdot \lambda)$
+        \end{itemize}
+        \item \textbf{Probability Distributions:}
+        \[
+        P(N(t) = k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!}, \quad k \geq 0
+        \]
+        \item \textbf{Interarrival Distribution:}
+        \[
+        P(T > t) = e^{-\lambda t}, \quad T \sim Exp(\lambda)
+        \]
+    \end{itemize}
+
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Poisson Process};
+\end{tikzpicture}
+
+\newcolumn
+%------------ Continuous Markov Chains ---------------
+
+\begin{tikzpicture}
+    \node [mybox] (box){
+        \begin{minipage}{0.45\textwidth}
+
+    \begin{itemize}
+        \item \textbf{Birth-Death Process:} Special case with rates:\\
+        $q_{i,i+1} = \lambda_i, \quad q_{i,i-1} = \mu_i, \quad q_{ii} = - (\lambda_i + \mu_i)$
+
+        \item \textbf{Stationary Distribution} (Birth-Death Process):
+        \[
+        \pi_0 = \frac{1}{1 + \frac{\lambda_0}{\mu_1} + \frac{\lambda_0 \lambda_1}{\mu_1 \mu_2} + \dots}
+        \]\\
+        \[
+        \pi_n = \frac{\lambda_0 \lambda_1 \dots \lambda_{n-1}}{\mu_1 \mu_2 \dots \mu_n} \pi_0
+        \]
+        \item \textbf{Holding time params.} $v_0, v_1.. \sim \ min(exp(\lambda_1), exp(\lambda_2)..)$ \\
+        Mean time in state i = $\frac{1}{v_i}$
+        \item Jump Chain = $P_{i, j} \rightarrow P(T_a < T_b)$
+        \item \small Generator matrix : \\
+        $q_{ii} = -v_i$ diagonals\\
+        $q_{ij} = v_i P_{i, j}$  for  $j \neq i$
+
+
+    \end{itemize}
+
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Continuous Markov Chains};
+\end{tikzpicture}
+
+\end{multicols*}
+\end{document}
